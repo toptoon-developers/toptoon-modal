@@ -1,5 +1,5 @@
 import _ from "lodash";
-// import { useRouter } from "next/router";
+import { useLocation } from "react-router";
 import React, { useEffect } from "react";
 import { BehaviorSubject, interval } from "rxjs";
 import { take } from "rxjs/operators";
@@ -45,7 +45,6 @@ export const randomString = (): string => {
  */
 const createComponent = ({
   key,
-  styles,
   className,
   shouldCloseOnEsc,
   shouldCloseOnOverlayClick,
@@ -166,13 +165,13 @@ const ModalContainer: React.FC<ModalContainerProps> = (props) => {
   const [modalList, setModalList] = React.useState<Array<ModalItem>>([]);
   const { onLoad, onOverlayClick } = props;
 
-  const router = useRouter();
+  const router = useLocation();
 
   React.useEffect(() => {
     return () => {
       ModalInstance.getInstance().reset();
     };
-  }, [router.asPath]);
+  }, [router]);
 
   React.useEffect(() => {
     const subscriber = ModalInstance.getInstance().create();
