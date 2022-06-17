@@ -9,7 +9,7 @@ export declare const countDown: (startPoint: number) => import("rxjs").Observabl
 /**
  * 기본 모달 아이템 정의
  */
-export declare type ModalItem = {
+interface ModalItemProps {
     key: string;
     styles?: object;
     className?: string;
@@ -18,7 +18,7 @@ export declare type ModalItem = {
     shouldCloseOnEsc?: boolean;
     originComponent?: JSX.Element;
     component: JSX.Element;
-};
+}
 /**
  * 랜덤 키 생성
  * @return {string} random string
@@ -40,13 +40,13 @@ export declare class ModalInstance {
      * Observer 생성
      * @returns Array<ModalItem>
      */
-    create(): BehaviorSubject<Array<ModalItem>>;
+    create(): BehaviorSubject<Array<ModalItemProps>>;
     /**
      * show modal
      * @param key modal key
      * @param item child component for modal
      */
-    push(modal: ModalItem): BehaviorSubject<ModalItem[]> | undefined;
+    push(modal: ModalItemProps): BehaviorSubject<ModalItemProps[]> | undefined;
     /**
      * close modal
      * @param key modal key

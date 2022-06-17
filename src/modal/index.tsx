@@ -19,7 +19,7 @@ export const countDown = (startPoint: number) => {
 /**
  * 기본 모달 아이템 정의
  */
-export type ModalItem = {
+interface ModalItemProps {
   key: string;
   styles?: object;
   className?: string;
@@ -28,7 +28,7 @@ export type ModalItem = {
   shouldCloseOnEsc?: boolean;
   originComponent?: JSX.Element;
   component: JSX.Element;
-};
+}
 
 /**
  * 랜덤 키 생성
@@ -49,7 +49,7 @@ const createComponent = ({
   shouldCloseOnOverlayClick,
   shouldCloseOnOverlayCallback,
   component,
-}: ModalItem): React.ReactElement => {
+}: ModalItemProps): React.ReactElement => {
   const onClose = () => {
     ModalInstance.getInstance().delete(key);
   };
@@ -66,7 +66,7 @@ const createComponent = ({
   );
 };
 
-const checkDuplicate = (items: Array<ModalItem>, compareKey: string) => {
+const checkDuplicate = (items: Array<ModalItemProps>, compareKey: string) => {
   const result = _.filter(items, { key: compareKey });
   return result.length > 0;
 };
@@ -77,7 +77,7 @@ const checkDuplicate = (items: Array<ModalItem>, compareKey: string) => {
 export class ModalInstance {
   private static instance: ModalInstance;
 
-  private modal: BehaviorSubject<Array<ModalItem>> | undefined;
+  private modal: BehaviorSubject<Array<ModalItemProps>> | undefined;
 
   // eslint-disable-next-line class-methods-use-this
   init() {}
@@ -95,8 +95,8 @@ export class ModalInstance {
    * Observer 생성
    * @returns Array<ModalItem>
    */
-  public create(): BehaviorSubject<Array<ModalItem>> {
-    this.modal = new BehaviorSubject<Array<ModalItem>>([]);
+  public create(): BehaviorSubject<Array<ModalItemProps>> {
+    this.modal = new BehaviorSubject<Array<ModalItemProps>>([]);
     return this.modal;
   }
 
@@ -105,10 +105,10 @@ export class ModalInstance {
    * @param key modal key
    * @param item child component for modal
    */
-  public push(modal: ModalItem) {
+  public push(modal: ModalItemProps) {
     const { key } = modal;
     if (this.modal) {
-      const current: Array<ModalItem> = this.modal.getValue();
+      const current: Array<ModalItemProps> = this.modal.getValue();
 
       // 중복 제외 처리
       if (checkDuplicate(current, key)) {
@@ -132,7 +132,7 @@ export class ModalInstance {
    */
   public delete(key: string) {
     if (this.modal) {
-      const modals: Array<ModalItem> = this.modal.getValue();
+      const modals: Array<ModalItemProps> = this.modal.getValue();
       _.remove(modals, (n) => {
         return n.key === key;
       });
@@ -161,7 +161,7 @@ interface ModalContainerProps {
  * @constructor React
  */
 const ModalContainer: React.FC<ModalContainerProps> = (props) => {
-  const [modalList, setModalList] = React.useState<Array<ModalItem>>([]);
+  const [modalList, setModalList] = React.useState<Array<ModalItemProps>>([]);
   const { onLoad, onOverlayClick } = props;
 
   const router = useLocation();
@@ -175,7 +175,7 @@ const ModalContainer: React.FC<ModalContainerProps> = (props) => {
   React.useEffect(() => {
     const subscriber = ModalInstance.getInstance().create();
     subscriber.subscribe({
-      next: (v: Array<ModalItem>) => {
+      next: (v: Array<ModalItemProps>) => {
         setModalList(v);
       },
     });
