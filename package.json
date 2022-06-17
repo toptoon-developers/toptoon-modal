@@ -1,0 +1,27 @@
+{
+  "name": "toptoon-modal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toptoon-developers/toptoon-modal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toptoon-developers/toptoon-modal/issues"
+  },
+  "homepage": "https://github.com/toptoon-developers/toptoon-modal#readme",
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.8.1",
+    "classnames": "^2.3.1",
+    "react": "^17.0.2",
+    "react-device-detect": "^2.2.2"
+  }
+}
