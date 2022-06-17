@@ -78,8 +78,8 @@ exports.randomString = randomString;
  * @returns
  */
 var createComponent = function (_a) {
-    var key = _a.key, className = _a.className, shouldCloseOnEsc = _a.shouldCloseOnEsc, shouldCloseOnOverlayClick = _a.shouldCloseOnOverlayClick, shouldCloseOnOverlayCallback = _a.shouldCloseOnOverlayCallback, component = _a.component;
-    var onClose = function (e) {
+    var key = _a.key, className = _a.className, shouldCloseOnOverlayClick = _a.shouldCloseOnOverlayClick, shouldCloseOnOverlayCallback = _a.shouldCloseOnOverlayCallback, component = _a.component;
+    var onClose = function () {
         ModalInstance.getInstance().delete(key);
     };
     return (react_1.default.createElement(CustomModal_1.default, { addClassName: className, onClose: onClose, shouldCloseOnOverlayClick: shouldCloseOnOverlayClick, shouldCloseOnOverlayCallback: shouldCloseOnOverlayCallback }, component));
