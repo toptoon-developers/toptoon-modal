@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@config/*": ["./api/config/*"],
+      "@api/*": ["./api/*"],
+      "@types": ["./types"],
+      "interface/*": ["interface/*"]
+    },
+    "target": "es5",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+
+    "outDir": "dist",
+    "allowUmdGlobalAccess": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
