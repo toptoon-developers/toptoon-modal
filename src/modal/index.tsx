@@ -46,12 +46,11 @@ export const randomString = (): string => {
 const createComponent = ({
   key,
   className,
-  shouldCloseOnEsc,
   shouldCloseOnOverlayClick,
   shouldCloseOnOverlayCallback,
   component,
 }: ModalItem): React.ReactElement => {
-  const onClose = (e: any) => {
+  const onClose = () => {
     ModalInstance.getInstance().delete(key);
   };
 
