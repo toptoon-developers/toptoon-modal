@@ -1,9 +1,8 @@
 import _ from "lodash";
+// import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { isMobileSafari } from "react-device-detect";
 import { BehaviorSubject, interval } from "rxjs";
 import { take } from "rxjs/operators";
-import { useHistory, useLocation } from "react-router-dom";
 import CustomModal from "./CustomModal";
 
 /**
@@ -18,50 +17,6 @@ export const countDown = (startPoint: number) => {
 };
 
 /**
- * ANCHOR: mobileSafari 에서 Modal 활성화 시 스크롤 방지하기
- */
-export const ModalLockScroll = () => {
-  const body = document.querySelector("body");
-  const root = document.getElementById("root");
-  const html = document.querySelector("html");
-  const scrollPosition = window.scrollY;
-
-  const syncHeight = () => {
-    document.documentElement.style.setProperty(
-      "height",
-      `${window.innerHeight}px`
-    );
-  };
-
-  useEffect(() => {
-    if (!isMobileSafari) return null;
-
-    body.style.position = "fixed";
-    body.style.top = `-${scrollPosition}px`;
-    body.style.overflow = "hidden";
-    body.style.width = "100%";
-    root.style.overflow = "unset";
-    html.style.height = `${window.innerHeight}px`;
-    window.addEventListener("resize", syncHeight);
-
-    return () => {
-      if (isMobileSafari) {
-        body.style.removeProperty("position");
-        body.style.removeProperty("top");
-        body.style.removeProperty("overflow");
-        body.style.removeProperty("width");
-        root.style.removeProperty("overflow");
-        html.style.removeProperty("height");
-        window.scrollTo(0, scrollPosition);
-        window.removeEventListener("resize", syncHeight);
-      }
-    };
-  }, []);
-
-  return <></>;
-};
-
-/**
  * 기본 모달 아이템 정의
  */
 export type ModalItem = {
@@ -69,7 +24,7 @@ export type ModalItem = {
   styles?: object;
   className?: string;
   shouldCloseOnOverlayClick?: boolean;
-  shouldCloseOnOverlayCallback?: (e) => void;
+  shouldCloseOnOverlayCallback?: (e: any) => void;
   shouldCloseOnEsc?: boolean;
   originComponent?: JSX.Element;
   component: JSX.Element;
@@ -81,23 +36,6 @@ export type ModalItem = {
  */
 export const randomString = (): string => {
   return Math.random().toString(36).substr(2, 11);
-};
-
-/**
- * 모달 기본 스타일 지정
- */
-const defaultStyles = {
-  overlay: {
-    background: "rgba(0, 0, 0, 0.5)",
-    zIndex: 400,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-  },
-  content: {
-    outline: "none",
-  },
 };
 
 /**
@@ -114,7 +52,7 @@ const createComponent = ({
   shouldCloseOnOverlayCallback,
   component,
 }: ModalItem): React.ReactElement => {
-  const onClose = (e) => {
+  const onClose = (e: any) => {
     ModalInstance.getInstance().delete(key);
   };
 
@@ -226,15 +164,16 @@ interface ModalContainerProps {
  */
 const ModalContainer: React.FC<ModalContainerProps> = (props) => {
   const [modalList, setModalList] = React.useState<Array<ModalItem>>([]);
-  const location = useLocation();
-  const history = useHistory();
   const { onLoad, onOverlayClick } = props;
+
+  const router = useRouter();
 
   React.useEffect(() => {
     return () => {
       ModalInstance.getInstance().reset();
     };
-  }, [location]);
+  }, [router.asPath]);
+
   React.useEffect(() => {
     const subscriber = ModalInstance.getInstance().create();
     subscriber.subscribe({
@@ -252,12 +191,21 @@ const ModalContainer: React.FC<ModalContainerProps> = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (modalList.length === 0) {
+      document.body.classList.remove("ReactModal__Body--open");
+    }
+    return () => {
+      document.body.classList.add("ReactModal__Body--open");
+    };
+  }, [modalList]);
+
   return (
     <>
       {/* Safari에서 Bottom Bar Behavior  숨김/ 보여짐시 height 대응 */}
-      {modalList.length > 0 && <ModalLockScroll />}
-      {modalList.map((item) => {
-        return item.component;
+      {/* {modalList.length > 0 && <ModalLockScroll />} */}
+      {modalList.map((item, index) => {
+        return <span key={`modal-${index}`}>{item.component}</span>;
       })}
     </>
   );
