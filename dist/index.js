@@ -56,7 +56,6 @@ var CustomModal_1 = __importDefault(require("./CustomModal"));
 /**
  * 카운트 다운 타이머 처리
  * @param startPoint
- * @param callback
  */
 var countDown = function (startPoint) {
     var intervalObs = (0, rxjs_1.interval)(1000);

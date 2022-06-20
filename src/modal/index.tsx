@@ -8,7 +8,6 @@ import CustomModal from "./CustomModal";
 /**
  * 카운트 다운 타이머 처리
  * @param startPoint
- * @param callback
  */
 export const countDown = (startPoint: number) => {
   const intervalObs = interval(1000);
@@ -76,7 +75,6 @@ const checkDuplicate = (items: Array<ModalItemProps>, compareKey: string) => {
  */
 export class ModalInstance {
   private static instance: ModalInstance;
-
   private modal: BehaviorSubject<Array<ModalItemProps>> | undefined;
 
   // eslint-disable-next-line class-methods-use-this

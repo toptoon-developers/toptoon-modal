@@ -3,7 +3,6 @@ import { BehaviorSubject } from "rxjs";
 /**
  * 카운트 다운 타이머 처리
  * @param startPoint
- * @param callback
  */
 export declare const countDown: (startPoint: number) => import("rxjs").Observable<number>;
 /**
