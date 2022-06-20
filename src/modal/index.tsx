@@ -131,7 +131,7 @@ export class ModalInstance {
   public delete(key: string) {
     if (this.modal) {
       const modals: Array<ModalItemProps> = this.modal.getValue();
-      _.remove(modals, (n) => {
+      _.remove(modals, (n: any) => {
         return n.key === key;
       });
       this.modal.next([...modals]);
