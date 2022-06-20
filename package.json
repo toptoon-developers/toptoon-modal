@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    // "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --reporter spec",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -23,13 +25,17 @@
     "@types/react": "^18.0.14",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
+    "pluralize": "^8.0.0",
     "react": "^17.0.2",
     "react-device-detect": "^2.2.2",
     "react-router": "^6.3.0",
-    "rxjs": "^7.5.5",
-    "typescript": "^4.7.3"
+    "rxjs": "^7.5.5"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.182"
+    "@types/lodash": "^4.14.182",
+    "@types/pluralize": "^0.0.29",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4"
   }
 }
